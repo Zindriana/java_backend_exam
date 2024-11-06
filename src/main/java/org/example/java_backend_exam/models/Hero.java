@@ -8,7 +8,7 @@ public class Hero {
     private List<String> languages;
 
     public Hero(String name, List<String> languages) {
-        this.name = name;
+        this.name = name.trim();
         this.languages = languages;
     }
 
