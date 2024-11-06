@@ -24,8 +24,8 @@ public class Controller {
 
     @CrossOrigin(origins = "https://zindriana.github.io/")
     @PostMapping("/createhero")
-        public void CreateHero(@RequestBody Hero hero){
-        }
+    public void CreateHero(@RequestBody Hero hero){
+    }
 
     @PostMapping("/createscroll")
     public void CreateScrolls(@RequestBody Scroll scroll){
