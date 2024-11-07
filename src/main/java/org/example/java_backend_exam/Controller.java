@@ -24,7 +24,8 @@ public class Controller {
 
     @PostMapping("/createscroll")
     public void CreateScrolls(@RequestBody Scroll scroll){
-
+        language.encryptScroll(scroll);
+        scrollList.add(scroll);
     }
 
     @GetMapping("/getheroes")
@@ -34,7 +35,7 @@ public class Controller {
 
     @GetMapping("/getscrolls")
     public List<Scroll> getScrolls(){
-        return null;
+        return scrollList;
     }
 
     @PostMapping("/decrypt")
