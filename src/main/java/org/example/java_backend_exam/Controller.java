@@ -16,7 +16,7 @@ public class Controller {
 
     public Controller() {}
 
-    @CrossOrigin(origins = "https://zindriana.github.io/")
+    @CrossOrigin(origins = "*")
     @PostMapping("/createhero")
     public void CreateHero(@RequestBody Hero hero){
         heroList.add(hero);
