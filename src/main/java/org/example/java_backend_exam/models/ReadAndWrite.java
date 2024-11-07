@@ -28,7 +28,8 @@ public class ReadAndWrite {
 
     private String encryptDwarven(String text) {
         StringBuilder encryptString = new StringBuilder();
-        for (char c : text.toCharArray()) {
+        String trimmedText = text.trim();
+        for (char c : trimmedText.toCharArray()) {
             encryptString.append((int) c).append(" ");
         }
         return encryptString.toString().trim();
@@ -47,7 +48,7 @@ public class ReadAndWrite {
                 encryptString.append(c);
             }
         }
-        return encryptString.toString();
+        return encryptString.toString().trim();
     }
 
     private String encryptHuman(String text) {
@@ -62,7 +63,7 @@ public class ReadAndWrite {
                 encryptedString.append(c);
             }
         }
-        return encryptedString.toString();
+        return encryptedString.toString().trim();
     }
 
     private String encryptOrc(String text) {
@@ -78,6 +79,6 @@ public class ReadAndWrite {
                 encryptString.append(c);
             }
         }
-        return encryptString.toString();
+        return encryptString.toString().trim();
     }
 }
