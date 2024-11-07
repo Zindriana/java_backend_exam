@@ -43,5 +43,16 @@ public class Controller {
         return null;
     }
 
+    @PostMapping("/choosehero")
+    public void chooseHero(@RequestBody Hero choosenHero){
+        for (Hero hero : heroList) {
+            if(hero.getName().equals(choosenHero.getName())) {
+                hero.setChoosen(true);
+            } else {
+                hero.setChoosen(false);
+            }
+        }
+    }
+
 }
 
