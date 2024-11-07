@@ -22,7 +22,7 @@ public class Controller {
         heroList.add(hero);
     }
 
-    @PostMapping("/createscroll")
+    @PostMapping("/newscroll")
     public void CreateScrolls(@RequestBody Scroll scroll){
         language.encryptScroll(scroll);
         scrollList.add(scroll);
