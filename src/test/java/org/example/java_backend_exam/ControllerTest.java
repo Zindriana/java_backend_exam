@@ -48,7 +48,7 @@ public class ControllerTest {
     @Test
     void createHero() throws Exception {
         Hero hero = new Hero("Stina", List.of("Human", "orc"));
-        mockMvc.perform(post("/createhero")
+        mockMvc.perform(post("/newhero")
                  .contentType("application/json")
                  .content(objectMapper.writeValueAsString(hero)))
                  .andExpect(status().isOk());
