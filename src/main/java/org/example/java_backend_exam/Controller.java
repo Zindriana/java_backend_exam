@@ -16,8 +16,8 @@ public class Controller {
 
     public Controller() {}
 
-    @CrossOrigin(origins = "*")
-    @PostMapping("/createhero")
+    @CrossOrigin(origins = "http://localhost:5174")
+    @PostMapping("/newhero")
     public void CreateHero(@RequestBody Hero hero){
         heroList.add(hero);
     }
