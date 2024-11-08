@@ -4,6 +4,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+//Todo:Add more tests for handling scrolls containing numbers.
+//Todo: also add tests for scrolls containing null, shouldn´t happen, but it will be good to test anyway
+
 class ReadAndWriteTest {
 
     ReadAndWrite readAndWrite = new ReadAndWrite();

@@ -15,11 +15,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.junit.jupiter.api.Test;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+//Todo: Add tests to handle null and with faulty language or scrolls containing numbers
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -62,7 +64,7 @@ public class ControllerTest {
     @Test
     void createScrolls() throws Exception{
         Scroll orcScroll = new Scroll("Orcisch ballads", " oRc ", " Songs and stuff ");
-        mockMvc.perform(post("/createscroll")
+        mockMvc.perform(post("/newscroll")
                  .contentType("application/json")
                  .content(objectMapper.writeValueAsString(orcScroll)))
                  .andExpect(status().isOk());
@@ -74,7 +76,7 @@ public class ControllerTest {
                  .andExpect(jsonPath("$[0].content").value("Tpoht boe tuvgg"));
 
         Scroll humanScroll = new Scroll("Human rituals ", " hUmAn ", " Wierd Rituals  ");
-        mockMvc.perform(post("/createscroll")
+        mockMvc.perform(post("/newscroll")
                  .contentType("application/json")
                  .content(objectMapper.writeValueAsString(humanScroll)))
                  .andExpect(status().isOk());
@@ -86,11 +88,11 @@ public class ControllerTest {
                  .andDo(result -> {
                     String actualContent = JsonPath.read(result.getResponse().getContentAsString(), "$[1].content");
                     String standardizedContent = convertDigitsToZero(actualContent);
-                    assertEquals("00slautir0dreiw0", standardizedContent);
+                    assertEquals("00slautiR0dreiW0", standardizedContent);
                 });
 
         Scroll elvishScroll = new Scroll("Elven politics", "   eLvEN ", " Political science stuff ");
-        mockMvc.perform(post("/createscroll")
+        mockMvc.perform(post("/newscroll")
                  .contentType("application/json")
                  .content(objectMapper.writeValueAsString(elvishScroll)))
                  .andExpect(status().isOk());
@@ -102,7 +104,7 @@ public class ControllerTest {
                  .andExpect(jsonPath("$[2].content").value("Onkhshbzk rbhdmbd rstee"));
 
         Scroll dwarvenScroll = new Scroll("   Smithing techniques ", " dwArVen ", " Axes and Armours   ");
-        mockMvc.perform(post("/createscroll")
+        mockMvc.perform(post("/newscroll")
                  .contentType("application/json")
                  .content(objectMapper.writeValueAsString(dwarvenScroll)))
                  .andExpect(status().isOk());
@@ -115,15 +117,20 @@ public class ControllerTest {
 
     }
 
-    @Test
-    void getHeroes() {
-    }
 
     @Test
-    void getScrolls() {
+    void decrypt() throws Exception {
+        Scroll scroll = new Scroll("   Mystisk rulle ", " hUman", " Massa mystisk text");
+        mockMvc.perform(post("/newscroll")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(scroll)))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(post("/decrypt")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(scroll)))
+                .andExpect(status().isOk());
+
     }
 
-    @Test
-    void decrypt() {
-    }
 }

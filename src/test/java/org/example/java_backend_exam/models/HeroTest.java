@@ -7,6 +7,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+//Todo: add test that prevents any field to be empty.
+
 class HeroTest {
 
     @Test
