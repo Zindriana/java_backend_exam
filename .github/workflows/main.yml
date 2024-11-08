@@ -3,7 +3,7 @@ name: Build and Test Java Project
 on:
   push:
     branches:
-      - dev
+      - dev, testing
 
 permissions:
   contents: write
