@@ -4,6 +4,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+//Todo:Add more tests for handling scrolls containing numbers.
+//Todo: also add tests for scrolls containing null, shouldn´t happen, but it will be good to test anyway
+
 class ReadAndWriteTest {
 
     ReadAndWrite readAndWrite = new ReadAndWrite();
@@ -44,7 +47,7 @@ class ReadAndWriteTest {
         readAndWrite.encryptScroll(scroll);
         scroll.setContent(convertDigitsToZero(scroll.getContent())); //convert the randomized numbers to 0
 
-        assertEquals(scroll.getContent(), "muspi0merol");
+        assertEquals(scroll.getContent(), "muspI0meroL");
     }
 
     @Test
@@ -54,4 +57,38 @@ class ReadAndWriteTest {
 
         assertEquals(scroll.getContent(), "Mpsfn Jqtvn");
     }
+
+    @Test
+    void decryptDwarvenTest() {
+        Scroll scroll = new Scroll(" Dwarf scroll", " Dwarven ", "Lorem Ipsum");
+        readAndWrite.encryptScroll(scroll);
+        readAndWrite.decryptScroll(scroll);
+        assertEquals(scroll.getContent(), "Lorem Ipsum");
+    }
+
+    @Test
+    void decryptElvenTest() {
+        Scroll scroll = new Scroll(" Elven scroll", " elVen ", "Lorem Ipsum");
+        readAndWrite.encryptScroll(scroll);
+        readAndWrite.decryptScroll(scroll);
+        assertEquals(scroll.getContent(), "Lorem Ipsum");
+    }
+
+    @Test
+    void decryptHumanTest() {
+        Scroll scroll = new Scroll(" Human scroll", " humaN ", "Lorem Ipsum");
+        readAndWrite.encryptScroll(scroll);
+        scroll.setContent(convertDigitsToZero(scroll.getContent())); //convert the randomized numbers to 0
+        readAndWrite.decryptScroll(scroll);
+        assertEquals(scroll.getContent(), "Lorem Ipsum");
+    }
+
+    @Test
+    void decryptOrcTest() {
+        Scroll scroll = new Scroll(" Orchish scroll", " oRc ", "Lorem Ipsum");
+        readAndWrite.encryptScroll(scroll);
+        readAndWrite.decryptScroll(scroll);
+        assertEquals(scroll.getContent(), "Lorem Ipsum");
+    }
+
 }

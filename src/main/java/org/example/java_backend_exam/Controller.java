@@ -22,7 +22,7 @@ public class Controller {
         heroList.add(hero);
     }
 
-    @PostMapping("/createscroll")
+    @PostMapping("/newscroll")
     public void CreateScrolls(@RequestBody Scroll scroll){
         language.encryptScroll(scroll);
         scrollList.add(scroll);
@@ -40,8 +40,28 @@ public class Controller {
 
     @PostMapping("/decrypt")
     public Scroll decrypt(@RequestBody Scroll scroll){
-        return null;
+        return language.decryptScroll(scroll);
     }
 
+    @PostMapping("/choosehero")
+    public void chooseHero(@RequestBody Hero choosenHero){
+        for (Hero hero : heroList) {
+            if(hero.getName().equals(choosenHero.getName())) {
+                hero.setChoosen(true);
+            } else {
+                hero.setChoosen(false);
+            }
+        }
+    }
+
+    @GetMapping("/getactivehero")
+    public Hero getActiveHero(){
+        for (Hero hero : heroList) {
+            if(hero.isChoosen()) {
+                return hero;
+            }
+        }
+        return null;
+    }
 }
 

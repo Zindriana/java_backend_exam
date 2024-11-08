@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+//Todo: add test that prevents any field to be empty.
 class ScrollTest {
 
     @Test
