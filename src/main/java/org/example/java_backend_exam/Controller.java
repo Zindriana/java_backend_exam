@@ -40,7 +40,7 @@ public class Controller {
 
     @PostMapping("/decrypt")
     public Scroll decrypt(@RequestBody Scroll scroll){
-        return null;
+        return language.decryptScroll(scroll);
     }
 
     @PostMapping("/choosehero")
@@ -54,5 +54,14 @@ public class Controller {
         }
     }
 
+    @GetMapping("/getactivehero")
+    public Hero getActiveHero(){
+        for (Hero hero : heroList) {
+            if(hero.isChoosen()) {
+                return hero;
+            }
+        }
+        return null;
+    }
 }
 
