@@ -15,13 +15,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.junit.jupiter.api.Test;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//Todo: Add tests to handle null and with faulty language or scrolls containing numbers
+//Todo: Add tests to handle null and with faulty language or scrolls containing numbers or special characters
 
 @SpringBootTest
 @AutoConfigureMockMvc
