@@ -30,7 +30,7 @@ class ReadAndWriteTest {
         Scroll scroll = new Scroll(" Dwarf scroll", " Dwarven ", "Lorem Ipsum");
         readAndWrite.encryptScroll(scroll);
 
-        assertEquals(scroll.getContent(), "76 111 114 101 109 32 73 112 115 117 109");
+        assertEquals("76 111 114 101 109 32 73 112 115 117 109", scroll.getContent());
     }
 
     @Test
@@ -38,7 +38,7 @@ class ReadAndWriteTest {
         Scroll scroll = new Scroll(" Elven scroll", " elVen ", "Lorem Ipsum");
         readAndWrite.encryptScroll(scroll);
 
-        assertEquals(scroll.getContent(), "Knqdl Hortl");
+        assertEquals("Knqdl~Hortl", scroll.getContent());
     }
 
     @Test
@@ -47,7 +47,7 @@ class ReadAndWriteTest {
         readAndWrite.encryptScroll(scroll);
         scroll.setContent(convertDigitsToZero(scroll.getContent())); //convert the randomized numbers to 0
 
-        assertEquals(scroll.getContent(), "muspI0meroL");
+        assertEquals("muspI0meroL", scroll.getContent());
     }
 
     @Test
@@ -55,40 +55,58 @@ class ReadAndWriteTest {
         Scroll scroll = new Scroll(" Orchish scroll", " oRc ", "Lorem Ipsum");
         readAndWrite.encryptScroll(scroll);
 
-        assertEquals(scroll.getContent(), "Mpsfn Jqtvn");
+        assertEquals("Mpsfn!Jqtvn", scroll.getContent());
     }
 
     @Test
     void decryptDwarvenTest() {
         Scroll scroll = new Scroll(" Dwarf scroll", " Dwarven ", "Lorem Ipsum");
+        Scroll scroll2 = new Scroll(" Dwarf scroll2", " Dwarven ", " /42*! ");
         readAndWrite.encryptScroll(scroll);
         readAndWrite.decryptScroll(scroll);
-        assertEquals(scroll.getContent(), "Lorem Ipsum");
+        readAndWrite.encryptScroll(scroll2);
+        readAndWrite.decryptScroll(scroll2);
+        assertEquals("Lorem Ipsum", scroll.getContent());
+        assertEquals("/42*!", scroll2.getContent());
     }
 
     @Test
     void decryptElvenTest() {
         Scroll scroll = new Scroll(" Elven scroll", " elVen ", "Lorem Ipsum");
+        Scroll scroll2 = new Scroll(" Elven scroll2", " ElvEn  ", " /42*! ");
         readAndWrite.encryptScroll(scroll);
         readAndWrite.decryptScroll(scroll);
-        assertEquals(scroll.getContent(), "Lorem Ipsum");
+        readAndWrite.encryptScroll(scroll2);
+        readAndWrite.decryptScroll(scroll2);
+        assertEquals("Lorem Ipsum", scroll.getContent());
+        assertEquals("/42*!", scroll2.getContent());
     }
 
     @Test
     void decryptHumanTest() {
         Scroll scroll = new Scroll(" Human scroll", " humaN ", "Lorem Ipsum");
+        Scroll scroll2 = new Scroll("    Human scroll2", "HuMaN ", "/42*!");
         readAndWrite.encryptScroll(scroll);
         scroll.setContent(convertDigitsToZero(scroll.getContent())); //convert the randomized numbers to 0
         readAndWrite.decryptScroll(scroll);
-        assertEquals(scroll.getContent(), "Lorem Ipsum");
+        readAndWrite.encryptScroll(scroll2);
+        System.out.println(scroll2.getContent());
+        scroll2.setContent(convertDigitsToZero(scroll2.getContent()));
+        readAndWrite.decryptScroll(scroll2);
+        assertEquals("Lorem Ipsum", scroll.getContent());
+        assertEquals("/42*!", scroll2.getContent());
     }
 
     @Test
     void decryptOrcTest() {
         Scroll scroll = new Scroll(" Orchish scroll", " oRc ", "Lorem Ipsum");
+        Scroll scroll2 = new Scroll(" Orc scroll2", " OrC  ", " /42*! ");
         readAndWrite.encryptScroll(scroll);
         readAndWrite.decryptScroll(scroll);
-        assertEquals(scroll.getContent(), "Lorem Ipsum");
+        readAndWrite.encryptScroll(scroll2);
+        readAndWrite.decryptScroll(scroll2);
+        assertEquals("Lorem Ipsum", scroll.getContent());
+        assertEquals("/42*!", scroll2.getContent());
     }
 
 }

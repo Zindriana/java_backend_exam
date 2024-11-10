@@ -6,7 +6,7 @@ public class Hero {
 
     private String name;
     private List<String> languages;
-    private boolean choosen = false;
+    private boolean choosen = false; //boolean to show if the character is the one active at the moment
 
     public Hero(String name, List<String> languages) {
         this.name = name.trim();

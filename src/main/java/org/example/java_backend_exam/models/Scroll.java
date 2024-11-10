@@ -2,8 +2,8 @@ package org.example.java_backend_exam.models;
 
 public class Scroll {
 
-    private String name;
-    private String language;
+    private final String name;
+    private final String language;
     private String content;
 
 

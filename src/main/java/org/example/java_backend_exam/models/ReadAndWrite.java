@@ -4,6 +4,7 @@ import java.util.Random;
 public class ReadAndWrite {
     Random rand = new Random();
 
+    //Check what language a scroll is written in and then calls for the right encrypt method
     public Scroll encryptScroll(Scroll scroll) {
         String language = scroll.getLanguage();
         Scroll encryptedScroll = scroll;
@@ -26,6 +27,7 @@ public class ReadAndWrite {
         return scroll;
     }
 
+    //Check what language a scroll is written in and then calls for the right decrypt method
     public Scroll decryptScroll(Scroll scroll) {
         String language = scroll.getLanguage();
         Scroll decryptedScroll = scroll;
@@ -48,6 +50,7 @@ public class ReadAndWrite {
         return scroll;
     }
 
+    //only encrypt by changing the characters to ASCII-numerical values
     private String encryptDwarven(String text) {
         StringBuilder encryptString = new StringBuilder();
         String trimmedText = text.trim();
@@ -57,50 +60,111 @@ public class ReadAndWrite {
         return encryptString.toString().trim();
     }
 
+    //encrypt by moving the character one step lower on the ASCII-value
     private String encryptElven(String text) {
         StringBuilder encryptString = new StringBuilder();
-        for (char c : text.toCharArray()) {
-            if (Character.isLetter(c)) {
+        String trimmedText = text.trim();
+        for (char c : trimmedText.toCharArray()) {
                 char shifted = (char) (c - 1);
-                if ((Character.isLowerCase(c) && shifted < 'a') || (Character.isUpperCase(c) && shifted < 'A')) {
-                    shifted += 26;
+                if (shifted < 32) {
+                    shifted += 95;
                 }
                 encryptString.append(shifted);
-            } else {
-                encryptString.append(c);
             }
-        }
-        return encryptString.toString().trim();
+        return encryptString.toString();
     }
 
+    //encrypt by changing spaces to a random number between 0-9 and changing special characters to another
+    //arbitrary character. The switch case doesn´t handle all possible special characters at the moment, but
+    //it shows a proof of concept.
+    //Then the encryption reverse the string. (e.g. a message written in only the english alphabet will only
+    // be reversed with added numbers instead of spaces
     private String encryptHuman(String text) {
         StringBuilder stringBuilder = new StringBuilder(text);
         String reversedString = stringBuilder.reverse().toString();
         StringBuilder encryptedString = new StringBuilder();
         for (char c : reversedString.toCharArray()) {
-            if (c == ' ') {
-                encryptedString.append(rand.nextInt(10));
-            } else {
-                encryptedString.append(c);
+            switch (c){
+                case '0':
+                    encryptedString.append('é');
+                    break;
+                case '1':
+                    encryptedString.append('ñ');
+                    break;
+                case '2':
+                    encryptedString.append('ü');
+                    break;
+                case '3':
+                    encryptedString.append('ö');
+                    break;
+                case '4':
+                    encryptedString.append('å');
+                    break;
+                case '5':
+                    encryptedString.append('ä');
+                    break;
+                case '6':
+                    encryptedString.append('£');
+                    break;
+                case '7':
+                    encryptedString.append('@');
+                    break;
+                case '8':
+                    encryptedString.append('ó');
+                    break;
+                case '9':
+                    encryptedString.append('á');
+                    break;
+                case '!':
+                    encryptedString.append('#');
+                    break;
+                case '?':
+                    encryptedString.append('ë');
+                    break;
+                case '@':
+                    encryptedString.append('?');
+                    break;
+                case '$':
+                    encryptedString.append('+');
+                    break;
+                case '/':
+                    encryptedString.append('-');
+                    break;
+                case '*':
+                    encryptedString.append('/');
+                    break;
+                case '-':
+                    encryptedString.append('.');
+                    break;
+                case '+':
+                    encryptedString.append(',');
+                    break;
+                case '=':
+                    encryptedString.append('[');
+                break;
+                default:
+                    if(c == ' '){encryptedString.append(rand.nextInt(10));
+                    } else {
+                        encryptedString.append(c);
+                    }
+                    break;
             }
         }
         return encryptedString.toString().trim();
     }
 
+    //encrypt by moving the character one step higher on the ASCII-value
     private String encryptOrc(String text) {
         StringBuilder encryptString = new StringBuilder();
-        for (char c : text.toCharArray()) {
-            if (Character.isLetter(c)) {
-                char shifted = (char) (c + 1);
-                if ((Character.isLowerCase(c) && shifted > 'z') || (Character.isUpperCase(c) && shifted > 'Z')) {
-                    shifted -= 26;
-                }
-                encryptString.append(shifted);
-            } else {
-                encryptString.append(c);
+        String trimmedText = text.trim();
+        for (char c : trimmedText.toCharArray()) {
+            char shifted = (char) (c + 1);
+            if (shifted > 126) {
+                shifted -= 95;
             }
+            encryptString.append(shifted);
         }
-        return encryptString.toString().trim();
+        return encryptString.toString();
     }
 
     private String decryptDwarven(String encryptedText) {
@@ -115,47 +179,105 @@ public class ReadAndWrite {
         return decryptedString.toString();
     }
 
+    //could have just used a call for the encryptOrc() to decrypt elven.
+    //But that would have caused problems if one of the methods would be changed at a later stage
     private String decryptElven(String text) {
-        StringBuilder encryptString = new StringBuilder();
+        StringBuilder decryptedString = new StringBuilder();
         for (char c : text.toCharArray()) {
-            if (Character.isLetter(c)) {
-                char shifted = (char) (c + 1);
-                if ((Character.isLowerCase(c) && shifted > 'z') || (Character.isUpperCase(c) && shifted > 'Z')) {
-                    shifted -= 26;
-                }
-                encryptString.append(shifted);
-            } else {
-                encryptString.append(c);
+            char shifted = (char) (c + 1);
+            if (shifted > 126) {
+                shifted -= 95;
             }
+            decryptedString.append(shifted);
         }
-        return encryptString.toString();
+        return decryptedString.toString().trim();
     }
 
     private String decryptHuman(String text) {
         StringBuilder decryptedString = new StringBuilder();
         for (char c : text.toCharArray()) {
-            if (Character.isDigit(c)) {
-                decryptedString.append(' ');
-            } else {
-                decryptedString.append(c);
+            switch (c){
+                case 'é':
+                    decryptedString.append('0');
+                    break;
+                case 'ñ':
+                    decryptedString.append('1');
+                    break;
+                case 'ü':
+                    decryptedString.append('2');
+                    break;
+                case 'ö':
+                    decryptedString.append('3');
+                    break;
+                case 'å':
+                    decryptedString.append('4');
+                    break;
+                case 'ä':
+                    decryptedString.append('5');
+                    break;
+                case '£':
+                    decryptedString.append('6');
+                    break;
+                case '@':
+                    decryptedString.append('7');
+                    break;
+                case 'ó':
+                    decryptedString.append('8');
+                    break;
+                case 'á':
+                    decryptedString.append('9');
+                    break;
+                case '#':
+                    decryptedString.append('!');
+                    break;
+                case 'ë':
+                    decryptedString.append('?');
+                    break;
+                case '?':
+                    decryptedString.append('@');
+                    break;
+                case '+':
+                    decryptedString.append('$');
+                    break;
+                case '-':
+                    decryptedString.append('/');
+                    break;
+                case '/':
+                    decryptedString.append('*');
+                    break;
+                case '.':
+                    decryptedString.append('-');
+                    break;
+                case ',':
+                    decryptedString.append('+');
+                    break;
+                case '[':
+                    decryptedString.append('=');
+                    break;
+                default:
+                    if (Character.isDigit(c)) {
+                        decryptedString.append(' ');
+                    } else {
+                        decryptedString.append(c);
+                    }
+                    break;
             }
+
         }
         return decryptedString.reverse().toString();
     }
 
+    //could have just used a call for the encryptElven() to decrypt orc.
+    //But that would have caused problems if one of the methods would be changed at a later stage
     private String decryptOrc(String text) {
-        StringBuilder encryptString = new StringBuilder();
+        StringBuilder decryptedString = new StringBuilder();
         for (char c : text.toCharArray()) {
-            if (Character.isLetter(c)) {
-                char shifted = (char) (c - 1);
-                if ((Character.isLowerCase(c) && shifted < 'a') || (Character.isUpperCase(c) && shifted < 'A')) {
-                    shifted += 26;
-                }
-                encryptString.append(shifted);
-            } else {
-                encryptString.append(c);
+            char shifted = (char) (c - 1);
+            if (shifted < 32) {
+                shifted += 95;
             }
+            decryptedString.append(shifted);
         }
-        return encryptString.toString().trim();
+        return decryptedString.toString();
     }
 }
