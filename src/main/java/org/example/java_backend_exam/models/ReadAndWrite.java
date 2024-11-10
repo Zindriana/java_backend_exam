@@ -4,6 +4,7 @@ import java.util.Random;
 public class ReadAndWrite {
     Random rand = new Random();
 
+    //Check what language a scroll is written in and then calls for the right encrypt method
     public Scroll encryptScroll(Scroll scroll) {
         String language = scroll.getLanguage();
         Scroll encryptedScroll = scroll;
@@ -26,6 +27,7 @@ public class ReadAndWrite {
         return scroll;
     }
 
+    //Check what language a scroll is written in and then calls for the right decrypt method
     public Scroll decryptScroll(Scroll scroll) {
         String language = scroll.getLanguage();
         Scroll decryptedScroll = scroll;
@@ -48,6 +50,7 @@ public class ReadAndWrite {
         return scroll;
     }
 
+    //only encrypt by changing the characters to ASCII-numerical values
     private String encryptDwarven(String text) {
         StringBuilder encryptString = new StringBuilder();
         String trimmedText = text.trim();
@@ -57,6 +60,7 @@ public class ReadAndWrite {
         return encryptString.toString().trim();
     }
 
+    //encrypt by moving the character one step lower on the ASCII-value
     private String encryptElven(String text) {
         StringBuilder encryptString = new StringBuilder();
         String trimmedText = text.trim();
@@ -70,6 +74,11 @@ public class ReadAndWrite {
         return encryptString.toString();
     }
 
+    //encrypt by changing spaces to a random number between 0-9 and changing special characters to another
+    //arbitrary character. The switch case doesn´t handle all possible special characters at the moment, but
+    //it shows a proof of concept.
+    //Then the encryption reverse the string. (e.g. a message written in only the english alphabet will only
+    // be reversed with added numbers instead of spaces
     private String encryptHuman(String text) {
         StringBuilder stringBuilder = new StringBuilder(text);
         String reversedString = stringBuilder.reverse().toString();
@@ -144,6 +153,7 @@ public class ReadAndWrite {
         return encryptedString.toString().trim();
     }
 
+    //encrypt by moving the character one step higher on the ASCII-value
     private String encryptOrc(String text) {
         StringBuilder encryptString = new StringBuilder();
         String trimmedText = text.trim();
@@ -169,6 +179,8 @@ public class ReadAndWrite {
         return decryptedString.toString();
     }
 
+    //could have just used a call for the encryptOrc() to decrypt elven.
+    //But that would have caused problems if one of the methods would be changed at a later stage
     private String decryptElven(String text) {
         StringBuilder decryptedString = new StringBuilder();
         for (char c : text.toCharArray()) {
@@ -255,6 +267,8 @@ public class ReadAndWrite {
         return decryptedString.reverse().toString();
     }
 
+    //could have just used a call for the encryptElven() to decrypt orc.
+    //But that would have caused problems if one of the methods would be changed at a later stage
     private String decryptOrc(String text) {
         StringBuilder decryptedString = new StringBuilder();
         for (char c : text.toCharArray()) {

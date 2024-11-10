@@ -20,7 +20,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//Todo: Add tests to handle null and with faulty language or scrolls containing numbers or special characters
+//Todo: Add tests to handle null and with faulty language
 
 @SpringBootTest
 @AutoConfigureMockMvc
