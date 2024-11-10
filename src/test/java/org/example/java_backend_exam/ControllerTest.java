@@ -72,7 +72,7 @@ public class ControllerTest {
                  .andExpect(status().isOk())
                  .andExpect(jsonPath("$[0].name").value("Orcisch ballads"))
                  .andExpect(jsonPath("$[0].language").value("orc"))
-                 .andExpect(jsonPath("$[0].content").value("Tpoht boe tuvgg"));
+                 .andExpect(jsonPath("$[0].content").value("Tpoht!boe!tuvgg"));
 
         Scroll humanScroll = new Scroll("Human rituals ", " hUmAn ", " Wierd Rituals  ");
         mockMvc.perform(post("/newscroll")
@@ -100,7 +100,7 @@ public class ControllerTest {
                  .andExpect(status().isOk())
                  .andExpect(jsonPath("$[2].name").value("Elven politics"))
                  .andExpect(jsonPath("$[2].language").value("elven"))
-                 .andExpect(jsonPath("$[2].content").value("Onkhshbzk rbhdmbd rstee"));
+                 .andExpect(jsonPath("$[2].content").value("Onkhshb`k~rbhdmbd~rstee"));
 
         Scroll dwarvenScroll = new Scroll("   Smithing techniques ", " dwArVen ", " Axes and Armours   ");
         mockMvc.perform(post("/newscroll")

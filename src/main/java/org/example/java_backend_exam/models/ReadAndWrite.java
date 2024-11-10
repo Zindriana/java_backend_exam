@@ -59,14 +59,15 @@ public class ReadAndWrite {
 
     private String encryptElven(String text) {
         StringBuilder encryptString = new StringBuilder();
-        for (char c : text.toCharArray()) {
+        String trimmedText = text.trim();
+        for (char c : trimmedText.toCharArray()) {
                 char shifted = (char) (c - 1);
                 if (shifted < 32) {
                     shifted += 95;
                 }
                 encryptString.append(shifted);
             }
-        return encryptString.toString().trim();
+        return encryptString.toString();
     }
 
     private String encryptHuman(String text) {
@@ -145,14 +146,15 @@ public class ReadAndWrite {
 
     private String encryptOrc(String text) {
         StringBuilder encryptString = new StringBuilder();
-        for (char c : text.toCharArray()) {
+        String trimmedText = text.trim();
+        for (char c : trimmedText.toCharArray()) {
             char shifted = (char) (c + 1);
             if (shifted > 126) {
                 shifted -= 95;
             }
             encryptString.append(shifted);
         }
-        return encryptString.toString().trim();
+        return encryptString.toString();
     }
 
     private String decryptDwarven(String encryptedText) {
@@ -262,6 +264,6 @@ public class ReadAndWrite {
             }
             decryptedString.append(shifted);
         }
-        return decryptedString.toString().trim();
+        return decryptedString.toString();
     }
 }
